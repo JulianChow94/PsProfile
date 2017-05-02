@@ -1,6 +1,12 @@
 # Load posh-git module from current directory
 Import-Module posh-git;
 
+# Chocolatey profile
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
+
 $computerName = $env:COMPUTERNAME.Substring(0,1).ToUpper() + 
                 $env:COMPUTERNAME.Substring(1).ToLower();
 
@@ -15,7 +21,7 @@ function global:prompt {
     Write-VcsStatus
 
     $global:LASTEXITCODE = $realLASTEXITCODE
-    Write-Host " >" -ForegroundColor yellow -NoNewline
+    Write-Host " $" -ForegroundColor yellow -NoNewline
     return " ";
 }
 
@@ -23,6 +29,7 @@ function global:prompt {
 Set-Alias -name ls -value "ls.exe" -Option allscope;
 Set-Alias -name echo -value "echo.exe" -Option allscope;
 Set-Alias -name open -value "ii";
+Set-Alias -name which -value "get-command";
 
 function track { & git push --set-upstream $args }
 New-Alias -Name s -Value track -Force -Option AllScope;
