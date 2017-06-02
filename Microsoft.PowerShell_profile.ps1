@@ -17,7 +17,7 @@ function global:prompt {
     $realLASTEXITCODE = $LASTEXITCODE
 
     Write-Host($env:USERNAME) -NoNewline -ForegroundColor Cyan
-    Write-Host("@") -NoNewline -ForegroundColor Cyan
+    Write-Host("@") -NoNewline -ForegroundColor White
     Write-Host($computerName)-NoNewline -ForegroundColor Cyan
 
     Write-VcsStatus
