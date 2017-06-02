@@ -28,7 +28,8 @@ function global:prompt {
 }
 
 # Aliases
-Set-Alias -name ls -value "ls.exe" -Option allscope;
+function lsdir { ls.exe --color=auto $args }
+Set-Alias -name ls -value lsdir -Option allscope;
 Set-Alias -name echo -value "echo.exe" -Option allscope;
 Set-Alias -name open -value "ii";
 Set-Alias -name which -value "get-command";
@@ -43,25 +44,25 @@ function Restart-Explorer { Stop-Process -ProcessName explorer }
 Set-alias -name restart -value Restart-Explorer;
 
 function whois {
-param ([Parameter(Mandatory=$True,
-        HelpMessage='Please enter domain name (e.g. microsoft.com)')]
-        [string]$domain)
-Write-Host "Connecting to Web Services URL..." -ForegroundColor Green
-try {
-  #Retrieve the data from web service WSDL
-  If ($whois = New-WebServiceProxy -uri "http://www.webservicex.net/whois.asmx?WSDL") {
-    Write-Host "Ok" -ForegroundColor Green
-  }
-  else {
-    Write-Host "Error" -ForegroundColor Red
-  }
+  param ([Parameter(Mandatory=$True,
+          HelpMessage='Please enter domain name (e.g. microsoft.com)')]
+          [string]$domain)
+  Write-Host "Connecting to Web Services URL..." -ForegroundColor Green
+  try {
+    #Retrieve the data from web service WSDL
+    If ($whois = New-WebServiceProxy -uri "http://www.webservicex.net/whois.asmx?WSDL") {
+      Write-Host "Ok" -ForegroundColor Green
+    }
+    else {
+      Write-Host "Error" -ForegroundColor Red
+    }
 
-  Write-Host "Gathering $domain data..." -ForegroundColor Green
-  #Return the data
-  (($whois.getwhois("=$domain")).Split("<<<")[0])
-} 
-catch {
-  Write-Host "Please enter valid domain name (e.g. microsoft.com)." -ForegroundColor Red}
+    Write-Host "Gathering $domain data..." -ForegroundColor Green
+    #Return the data
+    (($whois.getwhois("=$domain")).Split("<<<")[0])
+  } 
+  catch {
+    Write-Host "Please enter valid domain name (e.g. microsoft.com)." -ForegroundColor Red}
 } 
 
 Clear-Host;
