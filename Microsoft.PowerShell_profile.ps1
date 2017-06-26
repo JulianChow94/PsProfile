@@ -1,5 +1,6 @@
 # Load posh-git module from current directory
 Import-Module posh-git;
+Import-Module C:\Projects\Scripts\OneStoreScripts.ps1;
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
