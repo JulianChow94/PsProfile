@@ -32,7 +32,12 @@ function lsdir { ls.exe --color=auto $args }
 Set-Alias -name ls -value lsdir -Option allscope;
 Set-Alias -name echo -value "echo.exe" -Option allscope;
 Set-Alias -name open -value "ii";
-Set-Alias -name which -value "get-command";
+
+function which 
+{
+    param([string] $executable)
+    return (Get-command $executable).Source
+}
 
 function track { & git push --set-upstream $args }
 New-Alias -Name s -Value track -Force -Option AllScope;
